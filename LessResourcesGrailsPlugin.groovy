@@ -1,3 +1,9 @@
+import org.grails.plugin.resource.BundleResourceMapper
+import org.grails.plugin.resource.CSSBundleResourceMeta
+import org.grails.plugin.resource.ResourceModule
+import org.grails.plugin.resource.ResourceProcessor
+import org.grails.plugin.resource.ResourceTagLib
+
 
 class LessResourcesGrailsPlugin {
     // the plugin version
@@ -26,5 +32,15 @@ class LessResourcesGrailsPlugin {
     def doWithSpring = {
         org.grails.plugin.resource.CSSPreprocessorResourceMapper.defaultIncludes.add('**/*.less')
         org.grails.plugin.resource.CSSRewriterResourceMapper.defaultIncludes.add('**/*.less')
+		
+		BundleResourceMapper.MIMETYPE_TO_RESOURCE_META_CLASS.put('stylesheet/less', CSSBundleResourceMeta)
+		List currentTypes = new ResourceModule().bundleTypes
+		ResourceModule.metaClass.getBundleTypes = {  currentTypes << 'less' }
+		ResourceProcessor.DEFAULT_MODULE_SETTINGS['less'] = [disposition: 'head'  ]
+		ResourceTagLib.SUPPORTED_TYPES['less'] = [
+			type: "text/css",
+			rel: 'stylesheet/less',
+			media: 'screen, projection'
+		]
     }
 }
