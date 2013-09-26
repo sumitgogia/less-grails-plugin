@@ -1,8 +1,13 @@
 target
+target-eclipse
 stacktrace.log
 *.zip
+*.zip.sha1
 plugin.xml
 .idea
 *.iml
 .settings
 web-app
+/.link_to_grails_plugins
+.classpath
+.project
