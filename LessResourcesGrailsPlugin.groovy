@@ -4,19 +4,12 @@ import org.grails.plugin.resource.ResourceModule
 import org.grails.plugin.resource.ResourceProcessor
 import org.grails.plugin.resource.ResourceTagLib
 
+import org.grails.plugin.resource.CSSPreprocessorResourceMapper
+import org.grails.plugin.resource.CSSRewriterResourceMapper
 
 class LessResourcesGrailsPlugin {
-    // the plugin version
-    def version = "1.3.0.3"
-    // the version or versions of Grails the plugin is designed for
+    def version = "1.3.3.1-SGFIX"
     def grailsVersion = "2.0 > *"
-    // the other plugins this plugin depends on
-    def dependsOn = [resources:'1.0 > *']
-    def loadAfter = ['resources']
-    // resources that are excluded from plugin packaging
-    def pluginExcludes = [
-            "grails-app/views/error.gsp"
-    ]
 
     def author = "Karol Balejko"
     def authorEmail = "kb@groovydev.com"
@@ -30,8 +23,8 @@ class LessResourcesGrailsPlugin {
     def scm = [ url: "https://github.com/groovydev/less-grails-plugin" ]
 
     def doWithSpring = {
-        org.grails.plugin.resource.CSSPreprocessorResourceMapper.defaultIncludes.add('**/*.less')
-        org.grails.plugin.resource.CSSRewriterResourceMapper.defaultIncludes.add('**/*.less')
+        CSSPreprocessorResourceMapper.defaultIncludes.add('**/*.less')
+        CSSRewriterResourceMapper.defaultIncludes.add('**/*.less')
 		
 		BundleResourceMapper.MIMETYPE_TO_RESOURCE_META_CLASS.put('stylesheet/less', CSSBundleResourceMeta)
 		List currentTypes = new ResourceModule().bundleTypes

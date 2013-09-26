@@ -1,15 +1,18 @@
 package com.groovydev.less
 
+import groovy.util.logging.Log4j
 import org.mozilla.javascript.Context
+import org.mozilla.javascript.NativeArray
 
+@Log4j
 class Shell {
 
-    public static void print(text) {
-//        println text
+    static void print(text) {
+        log.debug text
     }
 
-    public static String readFile(String filename) {
-//        println "readFile: ${filename}"
+    static String readFile(String filename) {
+        log.debug "readFile: ${filename}"
         try {
             new File(filename).text
         } catch (Exception e) {
@@ -18,12 +21,12 @@ class Shell {
         }
     }
 
-    public static String writeFile(String filename, text) {
+    static String writeFile(String filename, text) {
         new File(filename).text = text
     }
 
-    public static String readUrl(String url) {
-//        println "readUrl: ${url}"
+    static String readUrl(String url) {
+        log.debug "readUrl: ${url}"
         try {
             new URL(url).text
         } catch (Exception e) {
@@ -31,15 +34,15 @@ class Shell {
         }
     }
 
-    public static String resolveUri(String path, org.mozilla.javascript.NativeArray paths) {
-//        println "resolveUri: path=${path}"
+    static String resolveUri(String path, NativeArray paths) {
+        log.debug "resolveUri: path=${path}"
         for (Object index : paths.getIds()) {
-            def it = paths.get(index, null);
+            def it = paths.get(index, null)
             def file = new File(it, path)
-//            println "test exists: ${file}"
+            log.trace "test exists: ${file}"
             if (file.exists()) {
-//                println "found file: ${file}"
-                return file.toURI().toString();
+                log.trace "found file: ${file}"
+                return file.toURI().toString()
             }
         }
 
